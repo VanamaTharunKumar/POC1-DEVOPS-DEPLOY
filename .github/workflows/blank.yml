@@ -25,6 +25,6 @@ jobs:
             cd /var/www/html
 
             # assuming we already have git repo cloned on the server
-            git pull
+            sudo git pull
 
             sudo systemctl restart nginx
