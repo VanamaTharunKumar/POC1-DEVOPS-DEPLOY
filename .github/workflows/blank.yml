@@ -1,4 +1,4 @@
-name: AWS EC2 CI/CD Deployment
+name: POC-1 CI/CD Deploy to Ubuntu EC2
 
 on:
   push:
@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Deploy to EC2
+      - name: Deploy to EC2 using SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
+          port: 22
           script: |
-            sudo rm -rf /usr/share/nginx/html/*
-            sudo cp -r * /usr/share/nginx/html/
+            sudo rm -rf /var/www/html/*
+            sudo cp -r * /var/www/html/
             sudo systemctl restart nginx
